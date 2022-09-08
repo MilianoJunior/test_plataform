@@ -81,7 +81,7 @@ class AppReload(MDApp):
         Window.left = 10
 
     def build(self):
-        return MDLabel(text="Hello, World reload 3", halign="center")
+        return MDLabel(text="Hello, World reload 4", halign="center")
 
     def on_start(self):
         if MODE == 'development':

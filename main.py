@@ -6,74 +6,8 @@ Created on Tue Sep  6 16:41:58 2022
 """
 
 # -*- coding: utf-8 -*-
-from kivymd.app import MDApp
-from kivymd.uix.label import MDLabel
-import pyautogui as pa
-
-objetivo = {
-                1: 'Criar uma interface',
-                2: 'Mostrar todas as tags e as propriedades',
-                3: 'Verificar se existem duplicidades ou nomes parecidos',
-                4: 'Alterar os nomes das tags',
-                5: 'Criar tags',
-                6: 'Deletar tags',
-                7: 'Otimizar a utilização das tags, conforme a necessidade de uso',
-                8: 'Salvar as alterações de tags para que sejam importadas pelo EasyBuilder',
-                9: 'oi',
-    
-    
-    }
-
-
-def centroMassa(size):
-    return (round(size[0]/2),round(size[1]/2))
-    
-tag = [
-       {
-        'id':'TS_O',
-        'local': 26,
-        'tipo':'Toglle',
-        'size':[63,63],
-        'position':[267,500],
-        'assert': ['verificar no log do sistema se foi ativado o stop UG-01',
-                   '1x-16388 == True'],
-      },
-       {
-        'id':'BL_O',
-        'local': 26,
-        'tipo':'Bit Lamp',
-        'size':[25,25],
-        'position':[215,632],
-        'assert': (106, 12, 6),
-      },
-       {
-        'id':'BL_O',
-        'local': 26,
-        'tipo':'Bit Lamp',
-        'size':[25,25],
-        'position':[215,661],
-        'assert': (106, 12, 6),
-      },
-       {
-        'id':'BL_O',
-        'local': 26,
-        'tipo':'Bit Lamp',
-        'size':[25,25],
-        'position':[215,790],
-        'assert': (15, 78, 25),
-      },
-       {
-        'mult': 4,
-        'id':'BL_O',
-        'local': 26,
-        'tipo':'Bit Lamp',
-        'size':[25,25],
-        'position':[215,790],
-        'assert': (15, 78, 25),
-      },
-       
-       
-       ]
+# from kivymd.app import MDApp
+# from kivymd.uix.label import MDLabel
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 from kivymd.uix.label import MDLabel
@@ -82,7 +16,23 @@ from multiprocessing import Process
 from datetime import datetime
 from kivymd.app import MDApp
 from typing import NoReturn
-import os
+import os, sys
+from libs.funcoes import *
+from libs.dados import *
+
+
+
+# objetivo = {
+#                 1: 'Criar uma interface',
+#                 2: 'Mostrar todas as tags e as propriedades',
+#                 3: 'Verificar se existem duplicidades ou nomes parecidos',
+#                 4: 'Alterar os nomes das tags',
+#                 5: 'Criar tags',
+#                 6: 'Deletar tags',
+#                 7: 'Otimizar a utilização das tags, confor-me a necessidade de uso',
+#                 8: 'Salvar as alterações de tags para que sejam importadas pelo EasyBuilder',
+#                 9: 'oi',
+#     }
 
 MODE = 'development'
 
@@ -94,6 +44,7 @@ def new_process(module: str)-> NoReturn:
         commands = {'nt': f"start python {module}",
                     'posix': f"gnome-terminal -- python3 {module}"}
         os.system(commands[os.name])
+        exit()
     except Exception as e:
         print(e)
 
@@ -104,13 +55,15 @@ class KvHandler(FileSystemEventHandler):
         self.app = app
 
     def on_modified(self, event):
-        ''' checks if there have been any changes in the registered module '''
+        ''' checks if there have been any changes  in the registered module '''
         for module in module_registration:
             if os.path.basename(event.src_path) == module:
-                self.app.get_running_app().stop()
+                # self.app.get_running_app().stop()
+                
                 p = Process(target=new_process,args=('main.py',))
                 p.start()
                 p.join()
+                self.app.stop()
                 return
 
 def run(app: object):
@@ -128,11 +81,14 @@ class AppReload(MDApp):
         Window.left = 10
 
     def build(self):
-        return MDLabel(text="Óla Mundo", halign="center")
+        return MDLabel(text="Hello, World reload 3", halign="center")
 
     def on_start(self):
         if MODE == 'development':
             run(self)
+            
+    def on_stop(self):
+        print(self)
 
 if __name__ == "__main__":
     ''' Run the application in a terminal, and through the code editor make your changes,

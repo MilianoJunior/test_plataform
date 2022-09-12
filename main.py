@@ -19,6 +19,7 @@ from typing import NoReturn
 import os, sys
 from libs.funcoes import *
 from libs.dados import *
+from libs.composite import Composite
 
 
 
@@ -34,9 +35,19 @@ from libs.dados import *
 #                 9: 'oi',
 #     }
 
+# comandos gits
+# atualizar repositorio online:
+    # git add .
+    # git commit -m "descricao das alteracoes"
+    # git push
+    
+# atualizar o repositorio local
+    # git pull
+    
+    
 MODE = 'development'
 
-module_registration = ['main.py'] # add modules that trigger reloading
+module_registration = ['main.py','interface_conexao.py'] # add modules that trigger reloading
 
 def new_process(module: str)-> NoReturn:
     '''function that executes the desired module in the terminal'''
@@ -57,9 +68,7 @@ class KvHandler(FileSystemEventHandler):
     def on_modified(self, event):
         ''' checks if there have been any changes  in the registered module '''
         for module in module_registration:
-            if os.path.basename(event.src_path) == module:
-                # self.app.get_running_app().stop()
-                
+            if os.path.basename(event.src_path) == module:                
                 p = Process(target=new_process,args=('main.py',))
                 p.start()
                 p.join()
@@ -76,12 +85,16 @@ class AppReload(MDApp):
 
     def __init__(self, *args, **kwargs):
         super(AppReload, self).__init__(*args, **kwargs)
-        Window.system_size = [360, 731]
+        Window.system_size = [605, 1000]
         Window.top = 40
         Window.left = 10
 
     def build(self):
-        return MDLabel(text="Hello, World reload 4", halign="center")
+
+
+        return Composite()()
+        # return MDLabel(text="Hello, World reload 4", halign="center")
+
 
     def on_start(self):
         if MODE == 'development':

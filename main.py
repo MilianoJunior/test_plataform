@@ -85,13 +85,16 @@ class AppReload(MDApp):
 
     def __init__(self, *args, **kwargs):
         super(AppReload, self).__init__(*args, **kwargs)
-        Window.system_size = [360, 731]
+        Window.system_size = [605, 1000]
         Window.top = 40
         Window.left = 10
 
     def build(self):
+
+
         return Composite()()
         # return MDLabel(text="Hello, World reload 4", halign="center")
+
 
     def on_start(self):
         if MODE == 'development':

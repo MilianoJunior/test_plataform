@@ -47,7 +47,7 @@ from libs.composite import Composite
     
 MODE = 'development'
 
-module_registration = ['main.py','interface_conexao.py'] # add modules that trigger reloading
+module_registration = ['main.py','interface_conexao.py','composite.py','funcoes.py'] # add modules that trigger reloading
 
 def new_process(module: str)-> NoReturn:
     '''function that executes the desired module in the terminal'''

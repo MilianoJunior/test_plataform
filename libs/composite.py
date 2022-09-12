@@ -14,7 +14,7 @@ from libs.interfaces.interface_conexao import InterfaceConexao
 
 class Composite(ScreenManager):
     '''
-    description: composição dos layouts em uma classe central
+    description: composição dos layouts em uma classe central-
     '''
 
     def __init__(self, *args, **kwargs):

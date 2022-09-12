@@ -12,7 +12,6 @@ from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from libs.funcoes import conexaoCLP, rastrearIP, lerCLP
-import trio
 
 from kivy.app import async_runTouchApp
 from functools import partial

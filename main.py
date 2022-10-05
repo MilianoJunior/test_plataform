@@ -21,30 +21,6 @@ from libs.funcoes import *
 from libs.dados import *
 from libs.composite import Composite
 
-
-
-# objetivo = {
-#                 1: 'Criar uma interface',
-#                 2: 'Mostrar todas as tags e as propriedades',
-#                 3: 'Verificar se existem duplicidades ou nomes parecidos',
-#                 4: 'Alterar os nomes das tags',
-#                 5: 'Criar tags',
-#                 6: 'Deletar tags',
-#                 7: 'Otimizar a utilização das tags, confor-me a necessidade de uso',
-#                 8: 'Salvar as alterações de tags para que sejam importadas pelo EasyBuilder',
-#                 9: 'oi',
-#     }
-
-# comandos gits
-# atualizar repositorio online:
-    # git add .
-    # git commit -m "descricao das alteracoes"
-    # git push
-    
-# atualizar o repositorio local
-    # git pull
-    
-    
 MODE = 'development'
 
 module_registration = ['main.py','interface_conexao.py','composite.py','funcoes.py'] # add modules that trigger reloading
@@ -66,7 +42,7 @@ class KvHandler(FileSystemEventHandler):
         self.app = app
 
     def on_modified(self, event):
-        ''' checks if there have been any changes  in the registered module '''
+        ''' checks if there have been any change  in the registered module '''
         for module in module_registration:
             if os.path.basename(event.src_path) == module:                
                 p = Process(target=new_process,args=('main.py',))
@@ -85,17 +61,13 @@ class AppReload(MDApp):
 
     def __init__(self, *args, **kwargs):
         super(AppReload, self).__init__(*args, **kwargs)
-        Window.system_size = [605, 1000]
-        Window.top = 40
-        Window.left = 10
+        Window.system_size = [833, 1000]
+        Window.top = -10
+        Window.left = 1950
 
     def build(self):
-
-
         return Composite()()
         # return MDLabel(text="Hello, World reload 4", halign="center")
-
-
     def on_start(self):
         if MODE == 'development':
             run(self)

@@ -21,7 +21,7 @@ def conexaoCLP(ip=''):
         print('Conexao realizada com sucesso!!')
         regs_list_1 = c.read_holding_registers(0, 10)
         regs_list_2 = c.read_holding_registers(55, 10)
-        lerCLP(c, 10)
+        # lerCLP(c, 10)
         # print(regs_list_1)
         # print(regs_list_2)
         c.close()
@@ -39,7 +39,21 @@ def lerCLP(obj, registro):
 def escreverCLP(obj, registro,value):
     if obj.open():
         obj.write_multiple_registers(registro, value)
-
+        
+        
+def lerTagsCSV():
+    import pandas as pd
+    df = pd.read_csv('libs/assets/tags_ug2.csv',sep=',',names=['name','device','type','address','x','sinal']) #usecols=[])
+    # cols = iter(['index','name','device','address','x','sinal'])
+    # for col in df.columns:
+    #     df = df.rename(columns={col: next(cols)},inplace = True)
+    return df
+    print(df.shape)
+    print(df.columns)
+    
+def convertDataFrame(dados,colunas):
+    print(dados)
+    
     
 def rastrearIP(HOST):
     import socket

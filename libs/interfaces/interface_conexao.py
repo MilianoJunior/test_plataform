@@ -13,6 +13,7 @@ from kivymd.uix.textfield import MDTextField
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivy.metrics import dp
 from kivymd.uix.datatables import MDDataTable
+from kivymd.uix.card import MDCard
 from libs.funcoes import conexaoCLP, rastrearIP, lerCLP, lerTagsCSV
 import random
 import time
@@ -29,15 +30,23 @@ class InterfaceConexao(MDScreen):
         
     def __call__(self):
         # layout menu
-        layout_p = MDBoxLayout(md_bg_color="#C3C3C3", 
+        layout_principal = MDBoxLayout(md_bg_color="#C3C3C3", 
                              orientation='vertical',
                              padding=[10,10,10,10],
                              size_hint=[1,1])
-        # # layout secundario
-        # layout_a = MDBoxLayout(md_bg_color="#C0C0C0", 
-        #                      orientation='horizontal',
-        #                      padding=[10,10,10,10],
-        #                      size_hint=[1,.2])
+        # # layout menu
+        layout_menu = MDBoxLayout(md_bg_color="#FFFFFF", 
+                                orientation='vertical',
+                                padding=[10,30,10,10],
+                                adaptive_height= True,
+                                size_hint=[1,.2],
+                                pos_hint= {"center_x": .5, "center_y": .5})
+
+        layout_body = MDBoxLayout(md_bg_color="#0F2983", 
+                                orientation='vertical',
+                                padding=[10,30,10,10],
+                                size_hint=[1,.5],
+                                pos_hint= {"center_x": .5, "center_y": .5})
         # layout_b = MDBoxLayout(md_bg_color="#0303C3", 
         #                      orientation='horizontal',
         #                      padding=[10,10,10,10],
@@ -83,8 +92,9 @@ class InterfaceConexao(MDScreen):
         # layout_a.add_widget(layout_c)
         # layout_a.add_widget(layout_d)
         # layout_p.add_widget(layout_a)
-        # layout_p.add_widget(layout_b)
-        self.add_widget(layout_p)
+        layout_principal.add_widget(layout_menu)
+        layout_principal.add_widget(layout_body)
+        self.add_widget(layout_principal)
         # retorno
         return self
     def conectar(self, *args):

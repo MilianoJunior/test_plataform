@@ -2,7 +2,7 @@
 """
 Created on Thu Sep  8 16:38:09 2022
 
-@author: jrmfi
+@author: jrmfi-
 """
 
 from kivy.uix.screenmanager import ScreenManager
@@ -10,6 +10,7 @@ from kivymd.uix.card import MDCard
 import random
 # meus modulos
 from libs.interfaces.interface_conexao import InterfaceConexao
+from libs.interfaces.matlab import EstudoProtecao
 
 
 class Composite(ScreenManager):
@@ -22,7 +23,8 @@ class Composite(ScreenManager):
 
     def __call__(self):
         try:
-            self.add_widget(InterfaceConexao(name='conexao')())
+            # self.add_widget(InterfaceConexao(name='conexao')())
+            self.add_widget(EstudoProtecao(name='principal')())
             return self
         except Exception as e:
             print(e)

@@ -21,9 +21,6 @@ def conexaoCLP(ip=''):
         print('Conexao realizada com sucesso!!')
         regs_list_1 = c.read_holding_registers(0, 10)
         regs_list_2 = c.read_holding_registers(55, 10)
-        # lerCLP(c, 10)
-        # print(regs_list_1)
-        # print(regs_list_2)
         c.close()
         return c
     return False
@@ -75,3 +72,15 @@ def rastrearIP(HOST):
                     #     if not data:
                     #         break
                     #     conn.sendall(data)
+
+cores = {
+            'back':'#D9D9D9',
+            'card':'#FFFFFF',
+            'inputLine':'#333333',
+            'buttonOFF': '#333333',
+            'buttonON':'#17B556',
+            'buttonRead':'#125F80',
+            'buttonWrite':'#0F2983',
+            'displayON':'#08BB24',
+            'displayOFF':'#000000',
+        }

@@ -23,8 +23,8 @@ class Composite(ScreenManager):
 
     def __call__(self):
         try:
-            # self.add_widget(InterfaceConexao(name='conexao')())
-            self.add_widget(EstudoProtecao(name='principal')())
+            self.add_widget(InterfaceConexao(name='conexao')())
+            # self.add_widget(EstudoProtecao(name='principal')())
             return self
         except Exception as e:
             print(e)

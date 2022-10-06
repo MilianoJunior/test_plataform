@@ -62,7 +62,7 @@ class AppReload(MDApp):
     def __init__(self, *args, **kwargs):
         super(AppReload, self).__init__(*args, **kwargs)
         Window.system_size = [833, 1000]
-        Window.top = -10
+        Window.top = 20
         Window.left = 1950
 
     def build(self):

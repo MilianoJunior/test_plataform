@@ -4,7 +4,6 @@ Created on Thu Sep  8 16:28:58 2022
 
 @author: jrmfi
 """
-
 from kivymd.app import MDApp
 from kivymd.uix.controllers import WindowController
 from kivymd.uix.screen import MDScreen
@@ -14,14 +13,29 @@ from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivy.metrics import dp
 from kivymd.uix.datatables import MDDataTable
 from kivymd.uix.card import MDCard
-from libs.funcoes import conexaoCLP, rastrearIP, lerCLP, lerTagsCSV
+from libs.funcoes import conexaoCLP, rastrearIP, lerCLP, lerTagsCSV, cores
 import random
 import time
 
-   
-    
-    
+
+
+
+class MeuBox(MDBoxLayout):
+    def __init__(self, name, size, cor, spacing=5, orientation='vertical', pos={"center_x": .5, "center_y": .5}, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.name = name
+        self.orientation = orientation
+        self.pos_hint = pos
+        self.padding = [10,10,10,10]
+        self.size_hint = size
+        self.md_bg_color= cor
+        self.spacing = spacing
+
+    def __call__(self):
+        return self
+
 class InterfaceConexao(MDScreen):
+
     def __init__(self, name, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.name = name
@@ -30,23 +44,26 @@ class InterfaceConexao(MDScreen):
         
     def __call__(self):
         # layout menu
-        layout_principal = MDBoxLayout(md_bg_color="#C3C3C3", 
-                             orientation='vertical',
-                             padding=[10,10,10,10],
-                             size_hint=[1,1])
+        layout_principal = MeuBox(name='principal', size=(1,1), cor=cores['back'])()
+        card_menu = MeuBox(name='menu', size=(1,2), cor=cores['card'])()
+        card_body = MeuBox(name='body', size=(1,8), cor=cores['card'])()
+        # layout_principal = MDBoxLayout(md_bg_color="#C3C3C3", 
+        #                      orientation='vertical',
+        #                      padding=[10,10,10,10],
+        #                      size_hint=[1,1])
         # # layout menu
-        layout_menu = MDBoxLayout(md_bg_color="#FFFFFF", 
-                                orientation='vertical',
-                                padding=[10,30,10,10],
-                                adaptive_height= True,
-                                size_hint=[1,.2],
-                                pos_hint= {"center_x": .5, "center_y": .5})
+        # layout_menu = MDBoxLayout(md_bg_color="#FFFFFF", 
+        #                         orientation='vertical',
+        #                         padding=[10,30,10,10],
+        #                         adaptive_height= True,
+        #                         size_hint=[1,.2],
+        #                         pos_hint= {"center_x": .5, "center_y": .5})
 
-        layout_body = MDBoxLayout(md_bg_color="#0F2983", 
-                                orientation='vertical',
-                                padding=[10,30,10,10],
-                                size_hint=[1,.5],
-                                pos_hint= {"center_x": .5, "center_y": .5})
+        # layout_body = MDBoxLayout(md_bg_color="#0F2983", 
+        #                         orientation='vertical',
+        #                         padding=[10,30,10,10],
+        #                         size_hint=[1,.5],
+        #                         pos_hint= {"center_x": .5, "center_y": .5})
         # layout_b = MDBoxLayout(md_bg_color="#0303C3", 
         #                      orientation='horizontal',
         #                      padding=[10,10,10,10],
@@ -92,8 +109,8 @@ class InterfaceConexao(MDScreen):
         # layout_a.add_widget(layout_c)
         # layout_a.add_widget(layout_d)
         # layout_p.add_widget(layout_a)
-        layout_principal.add_widget(layout_menu)
-        layout_principal.add_widget(layout_body)
+        layout_principal.add_widget(card_menu)
+        layout_principal.add_widget(card_body)
         self.add_widget(layout_principal)
         # retorno
         return self

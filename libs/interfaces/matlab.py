@@ -21,7 +21,7 @@ from functools import partial
 
 class EstudoProtecao(MDScreen):
 
-    defaut = {
+    concessionaria = {
                 'CELESC 13,8 kV':{'Sb': 100e6,'Vb':13.8e3}, 
                 'CELESC 23,1 kV':{'Sb': 100e6,'Vb':21.1e3}, 
                 'COPEL':{'Sb': 100e6,'Vb':34.5e3}, 
@@ -32,8 +32,8 @@ class EstudoProtecao(MDScreen):
     }
 
     configuracoes = {
-                        1: {'concessionaria':None, 'Value': None},
-                        2: {'circuito':None, 'Value': None},
+                        1: {'concessionaria':None, 'valor': 0},
+                        2: {'circuito':None, 'valor': 0},
 
     }
 
@@ -44,14 +44,17 @@ class EstudoProtecao(MDScreen):
     def __call__(self):
         # layout menu
         layout_principal = MDBoxLayout(md_bg_color="#C3C3C3", 
-                             orientation='vertical',
-                             padding=[10,10,10,10],
-                             spacing = 10,
-                             size_hint=[1,1],
-                             adaptive_height= True)
+                                        orientation='vertical',
+                                        padding=[10,10,10,10],
+                                        spacing = 10,
+                                        size_hint=[1,1],
+                                        adaptive_height= True)
+        display_menu = self.display()
+
         button = MDRaisedButton(text='Calcular',
                                 md_bg_color="0F2983",
                                 pos_hint= {'center_x': .5, 'center_y': .0})
+        layout_principal.add_widget(display_menu)
         layout_principal.add_widget(button)
         scroll = MDScrollView()
         # Lógica principal
@@ -107,7 +110,6 @@ class EstudoProtecao(MDScreen):
         menu.add_widget(titulo)
         lista_obj = MDList(height=10)
         for option in options:
-            print(option)
             r, g, b = [uniform(0.2, 1.0) for j in range(3)]
             checkbox = CheckBox(size_hint= (None, None),
                                 size= ("40dp", "40dp"),
@@ -122,25 +124,57 @@ class EstudoProtecao(MDScreen):
         return menu
 
     def display(self):
-        display_menu = MDCard(
-                    orientation='vertical',
-                    line_color=(0.2, 0.2, 0.2, 0.8),
-                    padding=[10,10,10,10],
-                    spacing=10,
-                    size_hint=(None, None),
-                    size = (100,200),
-                    focus_behavior=True,
-                    pos_hint={"center_x": .5, "center_y": .5},
-                    md_bg_color="#FFFFFF",
-                    unfocus_color="#FFFFFF",
-                    focus_color="#92CCDE",
-                    shadow_softness= 8,
-                )
+        print('#########################################################')
+        print(self.configuracoes)
+        print('------------')
+        display_menu = MDCard(  orientation='vertical',
+                                line_color=(0.2, 0.2, 0.2, 0.8),
+                                padding=[10,10,10,10],
+                                spacing=10,
+                                size_hint=(None, None),
+                                size = (800,200),
+                                focus_behavior=True,
+                                pos_hint={"center_x": .5, "center_y": .5},
+                                md_bg_color="#FFFFFF",
+                                unfocus_color="#FFFFFF",
+                                focus_color="#92CCDE",
+                    )
+        for key, value in self.configuracoes.items():
+            linha = MDBoxLayout(md_bg_color="#C3C3C3", 
+                                    orientation='horizontal',
+                                    padding=[1,1,1,1],
+                                    spacing = 0,
+                                    size_hint=[1,1],
+                                    adaptive_width=False)
+            for k, val in value.items():
+                print(value, k, val)
+                val = str(0) if val is None else str(int(val)+1)
+                print(val)
+                item =  MDLabel(text=k,
+                                halign="center",
+                                theme_text_color='Custom',
+                                font_style='Body1',
+                                text_color= "#333333",
+                                size_hint=(.2,1))
+                descricao = MDLabel(text=val,
+                                    halign="center",
+                                    theme_text_color='Custom',
+                                    font_style='Caption',
+                                    text_color= "#333333",
+                                    size_hint=(.4,1))
+                linha.add_widget(item)
+                linha.add_widget(descricao)
+            display_menu.add_widget(linha)
+
         return display_menu
     def on_checkbox_active(self,*args):
-        self.configuracoes[args[1].group][1] = args[0]
-        print(args[1].group)
+        print(int(args[1].group))
         print(args)
+        print(self.configuracoes[args[1].group])
+        # for key, value in self.configuracoes[int(args[1].group) - 1].items():
+        #     print(key, value)
+        self.display()
+        
 
 
     
